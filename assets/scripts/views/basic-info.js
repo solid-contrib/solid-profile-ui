@@ -45,7 +45,7 @@ export default class BasicInfoView extends View {
     this.qs('button.submit').classList.add('loading')
 
     // TODO: handle error cases
-    this.profile.setAndPatch({
+    this.profile.patch({
       name: newName,
       email: newEmail
     })

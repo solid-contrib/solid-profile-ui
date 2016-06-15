@@ -31,7 +31,7 @@ export default class Profile extends Events {
     }
   }
 
-  setAndPatch (options) {
+  patch (options) {
     const newName = options.name
     const newEmail = options.email
     let triplesToDel = []
@@ -53,9 +53,17 @@ export default class Profile extends Events {
       triplesToIns.push(newEmailTriple.toNT())
     }
 
+    if (triplesToDel.length === 0 && triplesToIns.length === 0) {
+      return new Promise((resolve, reject) => {
+        resolve(this.profile)
+      })
+        .then(() => {
+          this.emit('loaded')
+        })
+    }
+
     return solid.web.patch(this.profile.baseProfileUrl, triplesToDel, triplesToIns)
       .then(meta => {
-        console.log('Success!')
         return this.loadProfile()
       })
       .catch(err => {

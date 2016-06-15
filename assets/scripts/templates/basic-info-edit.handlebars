@@ -1,0 +1,43 @@
+<section class="card">
+
+  <div class="card-header">
+    <div class="columns">
+      <div class="column">
+        <h2 class="card-title float-left">Basic Information</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <form>
+      <div class="columns">
+        <div class="column col-sm-4">
+          <img class="avatar avatar-xl" src="{{picUrl}}" alt="User profile picture"/>
+        </div>
+        <div class="column col-sm-8">
+          <div class="columns">
+            <div class="column">
+              <label class="form-label" for="name-input">Name</label>
+              <input class="form-input" id="name-input" type="text" value="{{name}}"></input>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <label class="form-label" for="email-input">Email</label>
+              <input class="form-input" id="email-input" type="text" value="{{emailAddr}}"></input>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <div class="form-group">
+                <button class="submit btn btn-primary" type="submit">Submit</button>
+                <button class="cancel btn" type="reset">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</section>

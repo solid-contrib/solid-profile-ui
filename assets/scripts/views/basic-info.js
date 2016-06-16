@@ -32,6 +32,16 @@ export default class BasicInfoView extends View {
     // add event listeners
     this.qs('button.submit').addEventListener('click', this.onSubmit.bind(this))
     this.qs('button.cancel').addEventListener('click', this.render.bind(this))
+    const img = this.qs('#img-input')
+    img.addEventListener('change', () => {
+      this._getFileDataURL()
+        .then(fileDataURL => {
+          this.qs('img.avatar').src = fileDataURL
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    })
     return this
   }
 
@@ -48,6 +58,28 @@ export default class BasicInfoView extends View {
     this.profile.patch({
       name: newName,
       email: newEmail
+    })
+  }
+
+  _getFileDataURL () {
+    const img = this.qs('#img-input')
+
+    return new Promise((resolve, reject) => {
+      if (!img) {
+        reject('Could not find "#img-input"')
+      }
+
+      const newPic = img.files[0]
+
+      if (!newPic) {
+        reject('No file selected')
+      }
+
+      let fileReader = new FileReader()
+      fileReader.onload = () => {
+        resolve(fileReader.result)
+      }
+      fileReader.readAsDataURL(newPic)
     })
   }
 }

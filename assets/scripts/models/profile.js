@@ -24,10 +24,13 @@ export default class Profile extends Events {
   basicInfo () {
     if (!this.profile) { return {} }
     const webId = $rdf.sym(this.webId)
+    const name = this.profile.parsedGraph.any(webId, vocab.foaf('name'))
+    const mbox = this.profile.parsedGraph.any(webId, vocab.foaf('mbox'))
+    const pic = this.profile.parsedGraph.any(webId, vocab.foaf('img'))
     return {
-      name: this.profile.parsedGraph.any(webId, vocab.foaf('name')).value,
-      mbox: this.profile.parsedGraph.any(webId, vocab.foaf('mbox')).uri,
-      picUrl: this.profile.parsedGraph.any(webId, vocab.foaf('img')).uri
+      name: name ? name.value : '',
+      mbox: mbox ? mbox.value : '',
+      picUrl: pic ? pic.uri : 'assets/img/solid-logo.svg'
     }
   }
 
@@ -38,19 +41,24 @@ export default class Profile extends Events {
     let triplesToIns = []
     let oldNameTriple = this._getTriple(solid.vocab.foaf('name'))
     let oldEmailTriple = this._getTriple(vocab.foaf('mbox'))
-    let newNameTriple = clone(oldNameTriple)
-    let newEmailTriple = clone(oldEmailTriple)
-
-    newNameTriple.object = $rdf.lit(newName)
-    newEmailTriple.object = $rdf.sym(addressToMbox(newEmail))
+    let newNameTriple = $rdf.st(
+      $rdf.sym(this.webId), solid.vocab.foaf('name'), newName
+    )
+    let newEmailTriple = $rdf.st(
+      $rdf.sym(this.webId), solid.vocab.foaf('mbox'), addressToMbox(newEmail)
+    )
 
     if (!isEqual(oldNameTriple, newNameTriple)) {
-      triplesToDel.push(oldNameTriple.toNT())
       triplesToIns.push(newNameTriple.toNT())
+      if (oldNameTriple) {
+        triplesToDel.push(oldNameTriple.toNT())
+      }
     }
     if (!isEqual(oldEmailTriple, newEmailTriple)) {
-      triplesToDel.push(oldEmailTriple.toNT())
       triplesToIns.push(newEmailTriple.toNT())
+      if (oldEmailTriple) {
+        triplesToDel.push(oldEmailTriple.toNT())
+      }
     }
 
     if (triplesToDel.length === 0 && triplesToIns.length === 0) {
@@ -73,8 +81,9 @@ export default class Profile extends Events {
   }
 
   _getTriple (predicate) {
-    return this.profile.parsedGraph.statementsMatching(
+    const triples = this.profile.parsedGraph.statementsMatching(
       $rdf.sym(this.webId), predicate, undefined
-    )[0]
+    )
+    return triples.length ? triples[0] : null
   }
 }

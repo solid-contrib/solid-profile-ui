@@ -1,3 +1,4 @@
+ /* global FileReader */
 import basicInfoTpl from '../templates/basic-info-card.handlebars'
 import editBasicInfoTpl from '../templates/basic-info-edit.handlebars'
 import View from './view'

@@ -5,8 +5,10 @@
   "main": "assets/scripts/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --progress --colors --optimize-minimize --optimize-occurrence-order --optimize-dedupe",
-    "build-watch": "webpack --progress --colors --optimize-minimize --optimize-occurrence-order --optimize-dedupe --watch",
+    "build": "npm run build-js && npm run build-css",
+    "build-js": "webpack --progress --colors --optimize-minimize --optimize-occurrence-order --optimize-dedupe",
+    "build-js-watch": "webpack --progress --colors --optimize-minimize --optimize-occurrence-order --optimize-dedupe --watch",
+    "build-css": "cp node_modules/spectre.css/dist/spectre.min.css build/",
     "lint": "standard --verbose"
   },
   "author": "Daniel Friedman",

@@ -4,7 +4,7 @@ import 'whatwg-fetch'
 import basicInfoTpl from '../templates/basic-info-card.handlebars'
 import editBasicInfoTpl from '../templates/basic-info-edit.handlebars'
 import View from './view'
-import { mboxToAddress } from '../utils'
+import { addressToMbox, mboxToAddress } from '../utils'
 
 export default class BasicInfoView extends View {
   constructor (containerEl, profile) {
@@ -55,54 +55,41 @@ export default class BasicInfoView extends View {
   }
 
   onSubmit (event) {
+    event.preventDefault()
+
     // TODO: validate inputs
     const newName = this.qs('#name-input').value.trim()
     const newEmail = this.qs('#email-input').value.trim()
-
-    event.preventDefault()
+    const file = this.qs('#img-input').files[0]
 
     this.qs('button.submit').classList.add('loading')
 
-
-    const imgInput = this.qs('#img-input')
-    const file = imgInput.files[0] // TODO: handle error
     // TODO: convert name to a slug
-    const data = new FormData()
-    data.append('file', file)
-    fetch(this.profile.storageURI, {
-      method: 'POST',
-      body: data
-    })
-      .then(resp => {
-        // coerce error status codes into a rejected promise
-        if (resp.status >= 200 && resp.status < 300) {
-          return resp
-        } else {
-          var err = new Error(response.statusText)
-          err.response = response
-          throw err
-        }
+
+    let updateProfilePromise = file
+      ? this.profile.uploadPic(file)
+          .then(resp => {
+            this.profile.update({
+              name: newName,
+              mbox: addressToMbox(newEmail),
+              img: resp.headers.get('location')
+            })
+          })
+      : this.profile.update({
+        name: newName,
+        mbox: addressToMbox(newEmail)
       })
-      .then(resp => {
-        // patch the profile after the image successfully uploads
-        const picUrl = resp.headers.get('location')
-        this.profile.patch({
-          name: newName,
-          email: newEmail,
-          picUrl: picUrl
-        })
-      })
+
+    updateProfilePromise
       .catch(err => {
         console.log('Network or server error:', err)
       })
-
     /*
     TODO: handle error cases
       - what happens when the image POST fails, but PATCH-ing the profile works?
       - what happens when PATCH-ing the profile fails?
       - what happens when deleting the old pic fails?
     */
-
   }
 
   _getFileDataURL () {

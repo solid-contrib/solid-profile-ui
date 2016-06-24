@@ -1,8 +1,7 @@
-import isEqual from 'lodash/isEqual'
-import solid, { rdflib as $rdf, vocab } from 'solid-client'
+/* global fetch, FormData */
 import Events from 'minivents'
-
-import { addressToMbox } from '../utils'
+import solid, { rdflib as $rdf, vocab } from 'solid-client'
+import 'whatwg-fetch'
 
 export default class Profile extends Events {
   constructor (webId) {
@@ -36,51 +35,25 @@ export default class Profile extends Events {
     return `${this.profile.storage[0]}profile/`
   }
 
-  patch (options) {
-    const newName = options.name
-    const newEmail = options.email
-    const newPicUrl = options.picUrl
+  update (options) {
+    const fieldToPredicate = {
+      name: vocab.foaf('name'),
+      mbox: vocab.foaf('mbox'),
+      img: vocab.foaf('img')
+    }
     let triplesToDel = []
     let triplesToIns = []
-    // TODO: put .toNT() calls up here so that we don't need lodash.isEqual()
-    let oldNameTriple = this._getTriple(solid.vocab.foaf('name'))
-    let oldEmailTriple = this._getTriple(vocab.foaf('mbox'))
-    let oldPicUrlTriple = this._getTriple(vocab.foaf('img'))
-    let newNameTriple = $rdf.st(
-      $rdf.sym(this.webId), solid.vocab.foaf('name'), newName
-    )
-    let newEmailTriple = $rdf.st(
-      $rdf.sym(this.webId), solid.vocab.foaf('mbox'), addressToMbox(newEmail)
-    )
-    let newPicUrlTriple = $rdf.st(
-      $rdf.sym(this.webId), solid.vocab.foaf('img'), newPicUrl
-    )
 
-    if (!isEqual(oldNameTriple, newNameTriple)) {
-      triplesToIns.push(newNameTriple.toNT())
-      if (oldNameTriple) {
-        triplesToDel.push(oldNameTriple.toNT())
+    Object.keys(options).forEach(field => {
+      const predicate = fieldToPredicate[field]
+      const newValue = options[field]
+      const oldTriple = this._getTriple(predicate)
+      const newTriple = $rdf.st($rdf.sym(this.webId), predicate, newValue)
+      if (oldTriple) {
+        triplesToDel.push(oldTriple.toNT())
       }
-    }
-    if (!isEqual(oldEmailTriple, newEmailTriple)) {
-      triplesToIns.push(newEmailTriple.toNT())
-      if (oldEmailTriple) {
-        triplesToDel.push(oldEmailTriple.toNT())
-      }
-    }
-    if (!isEqual(oldPicUrlTriple, newPicUrlTriple)) {
-      triplesToIns.push(newPicUrlTriple.toNT())
-      if (oldPicUrlTriple) {
-        triplesToDel.push(oldPicUrlTriple.toNT())
-      }
-    }
-
-    if (triplesToDel.length === 0 && triplesToIns.length === 0) {
-      return Promise.resolve(this.profile)
-        .then(() => {
-          this.emit('loaded')
-        })
-    }
+      triplesToIns.push(newTriple.toNT())
+    })
 
     return solid.web.patch(this.profile.baseProfileUrl, triplesToDel, triplesToIns)
       .then(meta => {
@@ -90,6 +63,28 @@ export default class Profile extends Events {
         console.log('Error updating profile:', err)
         this.emit('error')
         throw err
+      })
+  }
+
+  uploadPic (file) {
+    if (!file) {
+      return Promise.reject(new Error('No file provided for upload'))
+    }
+    const data = new FormData()
+    data.append('file', file)
+    return fetch(this.storageURI, {
+      method: 'POST',
+      body: data
+    })
+      .then(resp => {
+        if (resp.status >= 200 && resp.status < 300) {
+          return resp
+        } else {
+          // coerce error status codes into a rejected promise
+          var err = new Error(resp.statusText)
+          err.resp = resp
+          throw err
+        }
       })
   }
 

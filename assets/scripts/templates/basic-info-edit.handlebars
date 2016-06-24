@@ -12,9 +12,17 @@
     <form>
       <div class="columns">
         <div class="column col-sm-4">
-          <img class="avatar avatar-xl" src="{{picUrl}}" alt="User profile picture"/>
-          <label class="form-label" for="img-input">Profile Picture</label>
-          <input class="form-input" id="img-input" type="file" accept="image/*">
+          <div class="columns">
+            <div class="column">
+              <img src="{{picUrl}}" alt="User profile" class="avatar avatar-xl">
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <button class="btn btn-sm" id="img-select">Choose Picture</button>
+              <input type="file" accept="image/*" class="hide" id="img-input">
+            </div>
+          </div>
         </div>
         <div class="column col-sm-8">
           <div class="columns">

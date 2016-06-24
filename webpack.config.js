@@ -9,13 +9,12 @@ module.exports = {
   resolve: {
     modulesDirectories: ['node_modules'],
     alias: {
-      solid: 'solid-client/dist/solid.min.js',
       spectre: 'spectre.css/dist/spectre.min.css'
     }
   },
   module: {
     loaders: [
-      { // babel-loader
+      {
         test: /\.js$/,
         exclude: /(node_modules)/,
         loader: 'babel',
@@ -23,14 +22,22 @@ module.exports = {
           presets: ['es2015']
         }
       },
-      { // handlebars-loader
+      {
         test: /\.handlebars$/,
-        loader: 'handlebars-loader'
+        loader: 'handlebars'
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
       }
     ]
   },
   node: {
     fs: 'empty'
+  },
+  externals: {
+    xhr2: 'XMLHttpRequest',
+    xmlhttprequest: 'XMLHttpRequest'
   },
   devtool: 'source-map'
 }

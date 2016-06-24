@@ -1,4 +1,4 @@
-import solid from 'solid'
+import solid from 'solid-client'
 
 import Profile from './models/profile'
 import BasicInfoView from './views/basic-info'

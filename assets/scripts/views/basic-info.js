@@ -1,4 +1,6 @@
- /* global FileReader */
+/* global FileReader */
+import 'whatwg-fetch'
+
 import basicInfoTpl from '../templates/basic-info-card.handlebars'
 import editBasicInfoTpl from '../templates/basic-info-edit.handlebars'
 import View from './view'
@@ -12,7 +14,7 @@ export default class BasicInfoView extends View {
   }
 
   render () {
-    const { name, mbox, picUrl } = this.profile.basicInfo()
+    const { name, mbox, picUrl } = this.profile.basicInfo
     this.renderHtml(basicInfoTpl({
       name: name,
       picUrl: picUrl,
@@ -24,7 +26,7 @@ export default class BasicInfoView extends View {
   }
 
   edit () {
-    const { name, mbox, picUrl } = this.profile.basicInfo()
+    const { name, mbox, picUrl } = this.profile.basicInfo
     this.renderHtml(editBasicInfoTpl({
       name: name,
       picUrl: picUrl,
@@ -33,8 +35,14 @@ export default class BasicInfoView extends View {
     // add event listeners
     this.qs('button.submit').addEventListener('click', this.onSubmit.bind(this))
     this.qs('button.cancel').addEventListener('click', this.render.bind(this))
-    const img = this.qs('#img-input')
-    img.addEventListener('change', () => {
+    const picInput = this.qs('#img-input')
+    const picSelectButton = this.qs('#img-select')
+    // Proxy the <input> element for better UX
+    picSelectButton.addEventListener('click', (event) => {
+      event.preventDefault()
+      picInput.click()
+    })
+    picInput.addEventListener('change', () => {
       this._getFileDataURL()
         .then(fileDataURL => {
           this.qs('img.avatar').src = fileDataURL
@@ -55,11 +63,46 @@ export default class BasicInfoView extends View {
 
     this.qs('button.submit').classList.add('loading')
 
-    // TODO: handle error cases
-    this.profile.patch({
-      name: newName,
-      email: newEmail
+
+    const imgInput = this.qs('#img-input')
+    const file = imgInput.files[0] // TODO: handle error
+    // TODO: convert name to a slug
+    const data = new FormData()
+    data.append('file', file)
+    fetch(this.profile.storageURI, {
+      method: 'POST',
+      body: data
     })
+      .then(resp => {
+        // coerce error status codes into a rejected promise
+        if (resp.status >= 200 && resp.status < 300) {
+          return resp
+        } else {
+          var err = new Error(response.statusText)
+          err.response = response
+          throw err
+        }
+      })
+      .then(resp => {
+        // patch the profile after the image successfully uploads
+        const picUrl = resp.headers.get('location')
+        this.profile.patch({
+          name: newName,
+          email: newEmail,
+          picUrl: picUrl
+        })
+      })
+      .catch(err => {
+        console.log('Network or server error:', err)
+      })
+
+    /*
+    TODO: handle error cases
+      - what happens when the image POST fails, but PATCH-ing the profile works?
+      - what happens when PATCH-ing the profile fails?
+      - what happens when deleting the old pic fails?
+    */
+
   }
 
   _getFileDataURL () {
@@ -67,13 +110,13 @@ export default class BasicInfoView extends View {
 
     return new Promise((resolve, reject) => {
       if (!img) {
-        reject('Could not find "#img-input"')
+        reject(new Error('Could not find "#img-input"'))
       }
 
       const newPic = img.files[0]
 
       if (!newPic) {
-        reject('No file selected')
+        reject(new Error('No file selected'))
       }
 
       let fileReader = new FileReader()

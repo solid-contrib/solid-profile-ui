@@ -32,7 +32,7 @@ export default class Profile extends Events {
   }
 
   get storageURI () {
-    return `${this.profile.storage[0]}profile/`
+    return `${this.profile.storage[0]}`
   }
 
   update (options) {

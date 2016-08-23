@@ -5,17 +5,15 @@ import { bindActionCreators } from 'redux'
 import * as Actions from '../actions'
 import ProfileView from '../components/ProfileView'
 
-// TODO: validate all these values on the profile
-// TODO: create a loading view
 const App = ({ profile, actions }) => {
+  // Assume that an empty profile object means we're still loading the page.
   if (Object.keys(profile).length === 0) {
     return (
-      <div>
-        Loading...
-      </div>
+      <div className="loading"></div>
     )
   }
 
+  // TODO: validate all these values on the profile with a container component
   const name = profile.get('name')[0].value
   const mailTo = profile.get('mbox')[0].value
   const email = mailTo.replace('mailto:', '')

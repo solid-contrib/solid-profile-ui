@@ -1,9 +1,10 @@
 var path = require('path')
 
 module.exports = {
-  entry: './assets/scripts/index.js',
+  entry: './src/index.js',
   output: {
     path: path.join(__dirname, '/build/'),
+    publicPath: '/build/',
     filename: 'bundle.js'
   },
   resolve: {
@@ -19,12 +20,8 @@ module.exports = {
         exclude: /(node_modules)/,
         loader: 'babel',
         query: {
-          presets: ['es2015']
+          presets: ['es2015', 'react']
         }
-      },
-      {
-        test: /\.handlebars$/,
-        loader: 'handlebars'
       },
       {
         test: /\.json$/,

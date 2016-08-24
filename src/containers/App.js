@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import * as Actions from '../actions'
-import ProfileView from '../components/ProfileView'
+import Profile from './Profile'
 
 const App = ({ profile, actions }) => {
   // Assume that an empty profile object means we're still loading the page.
@@ -13,23 +13,7 @@ const App = ({ profile, actions }) => {
     )
   }
 
-  // TODO: validate all these values on the profile with a container component
-  const name = profile.get('name')[0].value
-  const mailTo = profile.get('mbox')[0].value
-  const email = mailTo.replace('mailto:', '')
-  const picUrl = profile.get('img')[0].value
-
-  return (
-    <div>
-      <ProfileView
-        name={name}
-        email={email}
-        mailTo={mailTo}
-        picUrl={picUrl}
-        onClickEdit={actions.editProfile}
-      />
-    </div>
-  )
+  return <Profile />
 }
 
 App.propTypes = {

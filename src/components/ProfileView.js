@@ -39,7 +39,7 @@ ProfileView.propTypes = {
   email: PropTypes.string.isRequired,
   mailTo: PropTypes.string.isRequired,
   picUrl: PropTypes.string.isRequired,
-  editAction: PropTypes.func.isRequired
+  onClickEdit: PropTypes.func.isRequired
 }
 
 export default ProfileView

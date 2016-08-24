@@ -21,7 +21,6 @@ export function logInRequest () {
 }
 
 export function logInSuccess (profile) {
-  console.log('login success called with profile:', profile)
   return {
     type: LOG_IN_SUCCESS,
     profile
@@ -29,7 +28,6 @@ export function logInSuccess (profile) {
 }
 
 export function logInFailure (error) {
-  console.log('login failed with error:', error)
   return {
     type: LOG_IN_FAILURE,
     error

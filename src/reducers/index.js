@@ -20,6 +20,18 @@ export function isLoading (state = false, action) {
   }
 }
 
+export function isEditing (state = false, action) {
+  switch (action.type) {
+    case EDIT_PROFILE:
+      return true
+    case CANCEL_EDITING_PROFILE:
+    case SAVE_PROFILE_SUCCESS:
+      return false
+    default:
+      return state
+  }
+}
+
 export function profile (state = {}, action) {
   switch (action.type) {
     case LOG_IN_SUCCESS:
@@ -31,6 +43,6 @@ export function profile (state = {}, action) {
   }
 }
 
-const rootReducer = combineReducers({isLoading, profile})
+const rootReducer = combineReducers({isLoading, isEditing, profile})
 
 export default rootReducer

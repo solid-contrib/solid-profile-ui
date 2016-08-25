@@ -4,6 +4,7 @@ const ProfileEdit = ({
   name,
   email,
   picUrl,
+  isLoading,
   onChangeName,
   onChangeEmail,
   onClickSubmit,
@@ -51,7 +52,7 @@ const ProfileEdit = ({
               <div className="columns">
                 <div className="column">
                   <div className="form-group">
-                    <button className="submit btn btn-primary" type="submit" onClick={onClickSubmit}>Submit</button>
+                    <button className="submit btn btn-primary {isLoading ? 'loading' : ''}" type="submit" onClick={onClickSubmit}>Submit</button>
                     <button className="cancel btn" type="reset" onClick={onClickCancel}>Cancel</button>
                   </div>
                 </div>

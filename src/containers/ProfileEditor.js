@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import * as Actions from '../actions'
 import ProfileEdit from '../components/ProfileEdit'
 
-const ProfileEditor = ({ profile, actions }) => {
+const ProfileEditor = ({ profile, isLoading, actions }) => {
   const nameField = profile.get('name')[0]
   const mboxField = profile.get('mbox')[0]
   const imgField = profile.get('img')[0]
@@ -30,13 +30,14 @@ const ProfileEditor = ({ profile, actions }) => {
   const picUrl = imgField.value
 
   const props = {
-    name: name,
-    email: email,
-    picUrl: picUrl,
-    onChangeName: onChangeName,
-    onChangeEmail: onChangeEmail,
-    onClickSubmit: onClickSubmit,
-    onClickCancel: onClickCancel
+    name,
+    email,
+    picUrl,
+    isLoading,
+    onChangeName,
+    onChangeEmail,
+    onClickSubmit,
+    onClickCancel
   }
 
   return (
@@ -46,11 +47,12 @@ const ProfileEditor = ({ profile, actions }) => {
 
 ProfileEditor.propTypes = {
   profile: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   actions: PropTypes.object.isRequired
 }
 
 function mapStateToProps (state) {
-  return {profile: state.editedProfile}
+  return {profile: state.editedProfile, isLoading: state.isLoading}
 }
 
 function mapDispatchToProps (dispatch) {

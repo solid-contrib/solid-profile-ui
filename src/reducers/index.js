@@ -1,19 +1,24 @@
 import { combineReducers } from 'redux'
 
 import {
-  LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE,
-  EDIT_PROFILE, CANCEL_EDITING_PROFILE, SAVE_PROFILE_REQUEST,
-  SAVE_PROFILE_SUCCESS
-} from '../actions'
+  LOG_IN_REQUEST,
+  LOG_IN_SUCCESS,
+  LOG_IN_FAILURE,
+  PROFILE_EDIT,
+  PROFILE_FIELD_CHANGE,
+  PROFILE_CANCEL_EDITING,
+  PROFILE_SAVE_REQUEST,
+  PROFILE_SAVE_SUCCESS
+} from '../constants/action-types'
 
 export function isLoading (state = false, action) {
   switch (action.type) {
     case LOG_IN_REQUEST:
-    case SAVE_PROFILE_REQUEST:
+    case PROFILE_SAVE_REQUEST:
       return true
     case LOG_IN_SUCCESS:
     case LOG_IN_FAILURE:
-    case SAVE_PROFILE_SUCCESS:
+    case PROFILE_SAVE_SUCCESS:
       return false
     default:
       return state
@@ -22,10 +27,10 @@ export function isLoading (state = false, action) {
 
 export function isEditing (state = false, action) {
   switch (action.type) {
-    case EDIT_PROFILE:
+    case PROFILE_EDIT:
       return true
-    case CANCEL_EDITING_PROFILE:
-    case SAVE_PROFILE_SUCCESS:
+    case PROFILE_CANCEL_EDITING:
+    case PROFILE_SAVE_SUCCESS:
       return false
     default:
       return state
@@ -35,7 +40,7 @@ export function isEditing (state = false, action) {
 export function profile (state = {}, action) {
   switch (action.type) {
     case LOG_IN_SUCCESS:
-    case SAVE_PROFILE_SUCCESS:
+    case PROFILE_SAVE_SUCCESS:
       return action.profile
     case LOG_IN_FAILURE:
     default:
@@ -43,6 +48,26 @@ export function profile (state = {}, action) {
   }
 }
 
-const rootReducer = combineReducers({isLoading, isEditing, profile})
+// editedProfile tracks the state of the profile being currently edited
+export function editedProfile (state = {}, action) {
+  switch (action.type) {
+    case PROFILE_EDIT:
+      return action.profile
+    case PROFILE_FIELD_CHANGE:
+      return state.set(action.field, {value: action.value})
+    case PROFILE_CANCEL_EDITING:
+    case PROFILE_SAVE_SUCCESS:
+      return {}
+    default:
+      return state
+  }
+}
+
+const rootReducer = combineReducers({
+  isLoading,
+  isEditing,
+  profile,
+  editedProfile
+})
 
 export default rootReducer

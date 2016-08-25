@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import * as Actions from '../actions'
-import ProfileEdit from '../components/ProfileEdit'
+import ProfileEditor from './ProfileEditor'
 import ProfileView from '../components/ProfileView'
 
-const Profile = ({ isEditing, profile, actions }) => {
+const Profile = ({ isEditing, profile, editedProfile, actions }) => {
   // TODO: validate all these values on the profile with a container component
   const name = profile.get('name')[0].value
   const mailTo = profile.get('mbox')[0].value
@@ -20,19 +20,13 @@ const Profile = ({ isEditing, profile, actions }) => {
   // }
 
   return isEditing
-    ? <ProfileEdit
-        name={name}
-        email={email}
-        picUrl={picUrl}
-        onClickCancel={actions.cancelEditingProfile}
-        onClickSubmit={actions.cancelEditingProfile}
-      />
+    ? <ProfileEditor />
     : <ProfileView
         name={name}
         email={email}
         mailTo={mailTo}
         picUrl={picUrl}
-        onClickEdit={actions.editProfile}
+        onClickEdit={() => actions.editProfile(profile)}
       />
 }
 
@@ -43,7 +37,11 @@ Profile.propTypes = {
 }
 
 function mapStateToProps (state) {
-  return { isEditing: state.isEditing, profile: state.profile }
+  return {
+    isEditing: state.isEditing,
+    profile: state.profile,
+    editedProfile: state.editedProfile
+  }
 }
 
 function mapDispatchToProps (dispatch) {

@@ -36,7 +36,7 @@
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
-    "solid-client": "^0.22.2",
+    "solid-client": "^0.22.4",
     "spectre.css": "^0.1.24",
     "whatwg-fetch": "^1.0.0"
   }

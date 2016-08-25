@@ -20,10 +20,9 @@ const ProfileEditor = ({ profile, actions }) => {
   // TODO: implement picture upload
   // ...
   const onClickCancel = actions.cancelEditingProfile
-  // TODO: implement form submit
   const onClickSubmit = event => {
     event.preventDefault()
-    return actions.cancelEditingProfile()
+    return actions.saveProfile(profile)
   }
 
   const name = nameField.value

@@ -28,10 +28,12 @@ export function cancelEditingProfile () {
 }
 
 export function saveProfile (profile) {
-  return function (dispatch) {
+  return dispatch => {
     dispatch(saveProfileRequest)
     return profile.save(solid.rdflib, solid.web)
       .then(currentProfile => dispatch(saveProfileSuccess(currentProfile)))
+      // TODO: handle error
+      .catch(err => console.log('error saving profile:', err))
   }
 }
 

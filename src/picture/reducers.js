@@ -1,18 +1,18 @@
 import { combineReducers } from 'redux'
 
 import {
-  LOAD,
-  SELECT,
-  CANCEL,
-  UPLOAD_REQUEST,
-  UPLOAD_SUCCESS,
-  UPLOAD_FAILURE
+  PICTURE_LOAD,
+  PICTURE_SELECT,
+  PICTURE_CANCEL,
+  PICTURE_UPLOAD_REQUEST,
+  PICTURE_UPLOAD_SUCCESS,
+  PICTURE_UPLOAD_FAILURE
 } from './action-types'
 
 export function currentModel (state = {}, action) {
   switch (action.type) {
-    case LOAD:
-    case UPLOAD_SUCCESS:
+    case PICTURE_LOAD:
+    case PICTURE_UPLOAD_SUCCESS:
       return action.model
     default:
       return state
@@ -29,12 +29,13 @@ export function editedModel (state = {}, action) {
 
 export function isUploading (state = false, action) {
   switch (action.type) {
-    case UPLOAD_REQUEST:
+    case PICTURE_UPLOAD_REQUEST:
       return true
-    case UPLOAD_SUCCESS:
-    case UPLOAD_FAILURE:
+    case PICTURE_UPLOAD_SUCCESS:
+    case PICTURE_UPLOAD_FAILURE:
       return false
-    return state
+    default:
+      return state
   }
 }
 

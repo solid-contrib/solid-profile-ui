@@ -1,39 +1,41 @@
 import solid from 'solid-client'
 
 import {
-  LOAD,
-  EDIT,
-  FIELD_CHANGE,
-  CANCEL_EDITING,
-  SAVE_REQUEST,
-  SAVE_SUCCESS,
-  SAVE_FAILURE
+  BASIC_INFO_LOAD,
+  BASIC_INFO_EDIT,
+  BASIC_INFO_FIELD_CHANGE,
+  BASIC_INFO_CANCEL_EDITING,
+  BASIC_INFO_SAVE_REQUEST,
+  BASIC_INFO_SAVE_SUCCESS,
+  BASIC_INFO_SAVE_FAILURE
 } from './action-types'
 
-export function load (model) {
+import { createBasicInfoModel } from './models'
+
+export function load (solidProfile) {
   return {
-    type: LOAD,
-    model
+    type: BASIC_INFO_LOAD,
+    model: createBasicInfoModel(solidProfile)
   }
 }
 
 export function edit (model) {
   return {
-    type: EDIT,
+    type: BASIC_INFO_EDIT,
     model
   }
 }
 
 export function changeField (field, value) {
   return {
-    type: FIELD_CHANGE,
+    type: BASIC_INFO_FIELD_CHANGE,
     field,
     value
   }
 }
 
 export function cancelEditing () {
-  return { type: CANCEL_EDITING }
+  return { type: BASIC_INFO_CANCEL_EDITING }
 }
 
 export function save (model) {
@@ -46,19 +48,19 @@ export function save (model) {
 }
 
 export function saveRequest () {
-  return { type: SAVE_REQUEST }
+  return { type: BASIC_INFO_SAVE_REQUEST }
 }
 
 export function saveSuccess (model) {
   return {
-    type: SAVE_SUCCESS,
+    type: BASIC_INFO_SAVE_SUCCESS,
     model
   }
 }
 
 export function saveFailure (error) {
   return {
-    type: SAVE_FAILURE,
+    type: BASIC_INFO_SAVE_FAILURE,
     error
   }
 }

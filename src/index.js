@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
-import { logIn } from './actions'
-import App from './containers/App'
-import configureStore from './store/configureStore'
+import { loadProfile } from './actions'
+import App from './app/containers/App'
+import configureStore from './store'
 
 const store = configureStore()
 
@@ -15,4 +15,4 @@ ReactDOM.render(
   document.querySelector('#basic-info')
 )
 
-store.dispatch(logIn())
+store.dispatch(loadProfile())

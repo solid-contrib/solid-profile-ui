@@ -1,22 +1,24 @@
 import {
-  LOAD,
-  SELECT,
-  CANCEL,
-  UPLOAD_REQUEST,
-  UPLOAD_SUCCESS,
-  UPLOAD_FAILURE
+  PICTURE_LOAD,
+  PICTURE_SELECT,
+  PICTURE_CANCEL,
+  PICTURE_UPLOAD_REQUEST,
+  PICTURE_UPLOAD_SUCCESS,
+  PICTURE_UPLOAD_FAILURE
 } from './action-types'
 
-export function load (model) {
+import { createPictureModel } from './models'
+
+export function load (solidProfile) {
   return {
-    type: LOAD,
-    model
+    type: PICTURE_LOAD,
+    model: createPictureModel(solidProfile)
   }
 }
 
 export function select (file) {
   return {
-    type: SELECT,
+    type: PICTURE_SELECT,
     file
   }
 }
@@ -27,20 +29,20 @@ export function upload () {
 
 export function uploadRequest () {
   return {
-    type: UPLOAD_REQUEST
+    type: PICTURE_UPLOAD_REQUEST
   }
 }
 
 export function uploadSuccess (model) {
   return {
-    type: UPLOAD_SUCCESS,
+    type: PICTURE_UPLOAD_SUCCESS,
     model
   }
 }
 
 export function uploadFailure (error) {
   return {
-    type: UPLOAD_FAILURE,
+    type: PICTURE_UPLOAD_FAILURE,
     error
   }
 }

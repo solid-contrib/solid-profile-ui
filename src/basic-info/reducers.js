@@ -1,19 +1,19 @@
 import { combineReducers } from 'redux'
 
 import {
-  LOAD,
-  EDIT,
-  FIELD_CHANGE,
-  CANCEL_EDITING,
-  SAVE_REQUEST,
-  SAVE_SUCCESS,
-  SAVE_FAILURE
+  BASIC_INFO_LOAD,
+  BASIC_INFO_EDIT,
+  BASIC_INFO_FIELD_CHANGE,
+  BASIC_INFO_CANCEL_EDITING,
+  BASIC_INFO_SAVE_REQUEST,
+  BASIC_INFO_SAVE_SUCCESS,
+  BASIC_INFO_SAVE_FAILURE
 } from './action-types'
 
 function currentModel (state = {}, action) {
   switch (action.type) {
-    case LOAD:
-    case SAVE_SUCCESS:
+    case BASIC_INFO_LOAD:
+    case BASIC_INFO_SAVE_SUCCESS:
       return action.model
     default:
       return state
@@ -22,13 +22,13 @@ function currentModel (state = {}, action) {
 
 function editedModel (state = {}, action) {
   switch (action.type) {
-    case EDIT:
+    case BASIC_INFO_EDIT:
       return action.model
-    case FIELD_CHANGE:
+    case BASIC_INFO_FIELD_CHANGE:
       return state.set(action.field, {value: action.value})
-    case CANCEL_EDITING:
-    case SAVE_SUCCESS:
-    case LOAD:
+    case BASIC_INFO_CANCEL_EDITING:
+    case BASIC_INFO_SAVE_SUCCESS:
+    case BASIC_INFO_LOAD:
       return {}
     default:
       return state
@@ -37,11 +37,13 @@ function editedModel (state = {}, action) {
 
 function isSaving (state = false, action) {
   switch (action.type) {
-    case SAVE_REQUEST:
+    case BASIC_INFO_SAVE_REQUEST:
       return true
-    case SAVE_SUCCESS:
-    case SAVE_FAILURE:
+    case BASIC_INFO_SAVE_SUCCESS:
+    case BASIC_INFO_SAVE_FAILURE:
       return false
+    default:
+      return state
   }
 }
 

@@ -1,11 +1,9 @@
 import solid from 'solid-client'
 
-import createProfile from '../models/profile'
-
 import {
-  REQUEST,
-  SUCCESS,
-  FAILURE
+  AUTH_REQUEST,
+  AUTH_SUCCESS,
+  AUTH_FAILURE
 } from './action-types'
 
 export function authenticate () {
@@ -13,26 +11,24 @@ export function authenticate () {
     dispatch(request())
     return solid.login()
       .then(webId => dispatch(success(webId)))
-      // .then(webId => solid.getProfile(webId))
-      // .then(solidProfile => dispatch(success(createProfile(solidProfile))))
       .catch(error => dispatch(failure(error)))
   }
 }
 
 export function request () {
-  return { type: REQUEST }
+  return { type: AUTH_REQUEST }
 }
 
 export function success (webId) {
   return {
-    type: SUCCESS,
+    type: AUTH_SUCCESS,
     webId
   }
 }
 
 export function failure (error) {
   return {
-    type: FAILURE,
+    type: AUTH_FAILURE,
     error
   }
 }

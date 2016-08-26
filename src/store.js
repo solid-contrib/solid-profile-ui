@@ -1,7 +1,7 @@
-import { applyMiddleware, createStore } from 'redux'
+import { applyMiddleware, combineReducers, createStore } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 
-import rootReducer from '../reducers'
+import rootReducer from './rootReducer'
 
 // DEBUG - don't commit
 import createLogger from 'redux-logger'

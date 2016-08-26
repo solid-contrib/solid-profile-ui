@@ -15,7 +15,7 @@ function webId (state = '', action) {
   }
 }
 
-function isLoading (state = false, action) {
+function isLoading (state = true, action) {
   switch (action.type) {
     case AUTH_REQUEST:
       return true

@@ -7,6 +7,7 @@ const ProfileEdit = ({
   isLoading,
   onChangeName,
   onChangeEmail,
+  onSelectNewPic,
   onClickSubmit,
   onClickCancel
 }) => {
@@ -22,21 +23,24 @@ const ProfileEdit = ({
       </div>
 
       <div className="card-body">
-        <form>
-          <div className="columns">
-            <div className="column col-sm-4">
-              <div className="columns">
-                <div className="column">
-                  <img src={picUrl} alt="User profile" className="avatar avatar-xl" />
-                </div>
-              </div>
-              <div className="columns">
-                <div className="column">
-                  <button className="btn btn-sm" id="img-select" type="button">Choose Picture</button>
-                </div>
+        <div className="columns">
+          <div className="column col-sm-4">
+            <div className="columns">
+              <div className="column">
+                <img src={picUrl} alt="User profile" className="avatar avatar-xl" />
               </div>
             </div>
-            <div className="column col-sm-8">
+            <div className="columns">
+              <div className="column">
+                <form>
+                  <button className="btn btn-sm" id="img-select" type="button" onClick={onSelectNewPic}>Choose Picture</button>
+                  <input type="file" accept="image/*" className="hide" id="img-input" />
+                </form>
+              </div>
+            </div>
+          </div>
+          <div className="column col-sm-8">
+            <form>
               <div className="columns">
                 <div className="column">
                   <label className="form-label" htmlFor="name-input">Name</label>
@@ -46,7 +50,7 @@ const ProfileEdit = ({
               <div className="columns">
                 <div className="column">
                   <label className="form-label" htmlFor="email-input">Email</label>
-                  <input className="form-input" id="email-input" type="text" value={email} onChange={onChangeEmail} />
+                  <input className="form-input" id="email-input" type="email" value={email} onChange={onChangeEmail} />
                 </div>
               </div>
               <div className="columns">
@@ -57,9 +61,9 @@ const ProfileEdit = ({
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
 
     </section>
@@ -72,6 +76,7 @@ ProfileEdit.propTypes = {
   picUrl: PropTypes.string.isRequired,
   onChangeName: PropTypes.func.isRequired,
   onChangeEmail: PropTypes.func.isRequired,
+  onSelectNewPic: PropTypes.func.isRequired,
   onClickSubmit: PropTypes.func.isRequired,
   onClickCancel: PropTypes.func.isRequired
 }

@@ -5,44 +5,57 @@ import { bindActionCreators } from 'redux'
 import * as Actions from '../actions'
 import ProfileEdit from '../components/ProfileEdit'
 
-const ProfileEditor = ({ profile, isLoading, actions }) => {
-  const nameField = profile.get('name')[0]
-  const mboxField = profile.get('mbox')[0]
-  const imgField = profile.get('img')[0]
-
-  const onChangeName = event => {
-    return actions.changeProfileField(nameField, event.target.value)
-  }
-  const onChangeEmail = event => {
-    return actions.changeProfileField(mboxField, `mailto:${event.target.value}`)
-  }
-  // ...
-  // TODO: implement picture upload
-  // ...
-  const onClickCancel = actions.cancelEditingProfile
-  const onClickSubmit = event => {
-    event.preventDefault()
-    return actions.saveProfile(profile)
+class ProfileEditor extends React.Component {
+  onChangeField (field, processNewValue = x => x) {
+    const {actions} = this.props
+    return event => {
+      actions.changeProfileField(field, processNewValue(event.target.value))
+    }
   }
 
-  const name = nameField.value
-  const email = mboxField.value.replace('mailto:', '')
-  const picUrl = imgField.value
+  render () {
+    const {profile, actions, isLoading} = this.props
 
-  const props = {
-    name,
-    email,
-    picUrl,
-    isLoading,
-    onChangeName,
-    onChangeEmail,
-    onClickSubmit,
-    onClickCancel
+    const nameField = profile.get('name')[0]
+    const mboxField = profile.get('mbox')[0]
+    const imgField = profile.get('img')[0]
+
+    const onChangeName = this.onChangeField(nameField)
+    const onChangeEmail = this.onChangeField(mboxField, addr => `mailto:${addr}`)
+    // ...
+    // TODO: implement picture upload
+    // ...
+    const onSelectNewPic = event => {
+      event.preventDefault()
+      document.querySelector('#img-input').click()
+      // return actions.
+    }
+    const onClickCancel = actions.cancelEditingProfile
+    const onClickSubmit = event => {
+      event.preventDefault()
+      return actions.saveProfile(profile)
+    }
+
+    const name = nameField.value
+    const email = mboxField.value.replace('mailto:', '')
+    const picUrl = imgField.value
+
+    const props = {
+      name,
+      email,
+      picUrl,
+      isLoading,
+      onChangeName,
+      onChangeEmail,
+      onSelectNewPic,
+      onClickSubmit,
+      onClickCancel
+    }
+
+    return (
+      <ProfileEdit {...props} />
+    )
   }
-
-  return (
-    <ProfileEdit {...props} />
-  )
 }
 
 ProfileEditor.propTypes = {

@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux'
+
 import {
   AUTH_REQUEST,
   AUTH_SUCCESS,
@@ -24,3 +26,5 @@ function isLoading (state = false, action) {
       return state
   }
 }
+
+export default combineReducers({webId, isLoading})

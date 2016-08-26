@@ -1,0 +1,6 @@
+export const LOAD = 'LOAD'
+export const SELECT = 'SELECT'
+export const CANCEL = 'CANCEL'
+export const UPLOAD_REQUEST = 'UPLOAD_REQUEST'
+export const UPLOAD_SUCCESS = 'UPLOAD_SUCCESS'
+export const UPLOAD_FAILURE = 'UPLOAD_FAILURE'

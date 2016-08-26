@@ -1,0 +1,7 @@
+export const LOAD = 'LOAD'
+export const EDIT = 'EDIT'
+export const FIELD_CHANGE = 'FIELD_CHANGE'
+export const CANCEL_EDITING = 'CANCEL_EDITING'
+export const SAVE_REQUEST = 'SAVE_REQUEST'
+export const SAVE_SUCCESS = 'SAVE_SUCCESS'
+export const SAVE_FAILURE = 'SAVE_FAILURE'

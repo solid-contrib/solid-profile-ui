@@ -3,36 +3,36 @@ import solid from 'solid-client'
 import createProfile from '../models/profile'
 
 import {
-  AUTH_REQUEST,
-  AUTH_SUCCESS,
-  AUTH_FAILURE
+  REQUEST,
+  SUCCESS,
+  FAILURE
 } from './action-types'
 
-export function logIn () {
+export function authenticate () {
   return dispatch => {
-    dispatch(authRequest())
+    dispatch(request())
     return solid.login()
-      .then(webId => dispatch(authSuccess(webId)))
+      .then(webId => dispatch(success(webId)))
       // .then(webId => solid.getProfile(webId))
-      // .then(solidProfile => dispatch(authSuccess(createProfile(solidProfile))))
-      .catch(error => dispatch(authFailure(error)))
+      // .then(solidProfile => dispatch(success(createProfile(solidProfile))))
+      .catch(error => dispatch(failure(error)))
   }
 }
 
-export function authRequest () {
-  return { type: AUTH_REQUEST }
+export function request () {
+  return { type: REQUEST }
 }
 
-export function authSuccess (webId) {
+export function success (webId) {
   return {
-    type: AUTH_SUCCESS,
+    type: SUCCESS,
     webId
   }
 }
 
-export function authFailure (error) {
+export function failure (error) {
   return {
-    type: AUTH_FAILURE,
+    type: FAILURE,
     error
   }
 }

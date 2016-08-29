@@ -1,4 +1,4 @@
-var path = require('path')
+const path = require('path')
 
 module.exports = {
   entry: './src/index.js',
@@ -8,10 +8,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   resolve: {
-    modulesDirectories: ['node_modules'],
-    alias: {
-      spectre: 'spectre.css/dist/spectre.min.css'
-    }
+    modulesDirectories: ['node_modules']
   },
   module: {
     loaders: [
@@ -33,5 +30,6 @@ module.exports = {
     xhr2: 'XMLHttpRequest',
     xmlhttprequest: 'XMLHttpRequest'
   },
-  devtool: 'source-map'
+  devtool: 'source-map',
+  plugins: []
 }

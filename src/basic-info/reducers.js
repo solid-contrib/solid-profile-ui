@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
 import {
-  BASIC_INFO_LOAD,
+  BASIC_INFO_GET_MODEL,
   BASIC_INFO_EDIT,
   BASIC_INFO_FIELD_CHANGE,
   BASIC_INFO_CANCEL_EDITING,
@@ -12,7 +12,7 @@ import {
 
 function currentModel (state = {}, action) {
   switch (action.type) {
-    case BASIC_INFO_LOAD:
+    case BASIC_INFO_GET_MODEL:
     case BASIC_INFO_SAVE_SUCCESS:
       return action.model
     default:
@@ -28,7 +28,7 @@ function editedModel (state = {}, action) {
       return state.set(action.field, {value: action.value})
     case BASIC_INFO_CANCEL_EDITING:
     case BASIC_INFO_SAVE_SUCCESS:
-    case BASIC_INFO_LOAD:
+    case BASIC_INFO_GET_MODEL:
       return {}
     default:
       return state

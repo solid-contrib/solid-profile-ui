@@ -1,7 +1,7 @@
 import solid from 'solid-client'
 
 import {
-  BASIC_INFO_LOAD,
+  BASIC_INFO_GET_MODEL,
   BASIC_INFO_EDIT,
   BASIC_INFO_FIELD_CHANGE,
   BASIC_INFO_CANCEL_EDITING,
@@ -12,9 +12,9 @@ import {
 
 import { createBasicInfoModel } from './models'
 
-export function load (solidProfile) {
+export function getModel (solidProfile) {
   return {
-    type: BASIC_INFO_LOAD,
+    type: BASIC_INFO_GET_MODEL,
     model: createBasicInfoModel(solidProfile)
   }
 }

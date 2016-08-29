@@ -8,11 +8,12 @@ import configureStore from './store'
 
 const store = configureStore()
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.querySelector('#basic-info')
-)
-
 store.dispatch(loadProfile())
+  .then(() => {
+    ReactDOM.render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+      document.querySelector('#basic-info')
+    )
+  })

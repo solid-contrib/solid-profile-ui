@@ -3,22 +3,27 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import BasicInfo from '../../basic-info/containers/BasicInfo'
+import PictureEditor from '../../picture/containers/PictureEditor'
 
-const App = ({ auth, basicInfoModel }) => {
-  if (auth.isLoading || Object.keys(basicInfoModel).length === 0) {
+const App = ({ auth }) => {
+  if (auth.isLoading) {
     return <div className="loading" />
   }
 
-  return <BasicInfo />
+  return (
+    <div>
+      <PictureEditor />
+      <BasicInfo />
+    </div>
+  )
 }
 
 App.propTypes = {
-  auth: PropTypes.object.isRequired,
-  basicInfoModel: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired
 }
 
 function mapStateToProps (state) {
-  return { auth: state.auth, basicInfoModel:  state.basicInfo.currentModel}
+  return { auth: state.auth }
 }
 
 function mapDispatchToProps (dispatch) {

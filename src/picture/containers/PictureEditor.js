@@ -18,8 +18,6 @@ const PictureEditor = ({ actions, file, isSaving, picUrl, storageUrl }) => {
   }
   const handleClickCancel = () => actions.cancel()
 
-  console.log('is saving?', isSaving)
-
   const props = {
     picUrl,
     canUpload,
@@ -49,6 +47,12 @@ function mapStateToProps (state) {
     picUrl: state.picture.fileDataUrl || state.picture.model.get('img')[0].value,
     storageUrl: state.solidProfile.storage[0]
   }
+}
+
+function getPicUrl (state) {
+  const imgFields = state.picture.model.get('img')
+  return state.picture.fileDataUrl
+    || imgFields.length ? imgFields[0].value : '/assets/img/solid-logo.svg'
 }
 
 function mapDispatchToProps (dispatch) {

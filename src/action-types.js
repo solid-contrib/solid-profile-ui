@@ -1,0 +1,1 @@
+export const SOLID_PROFILE_LOAD = 'SOLID_PROFILE_LOAD'

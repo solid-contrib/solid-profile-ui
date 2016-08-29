@@ -1,5 +1,5 @@
 import solid from 'solid-client'
-import { fetch } from 'whatwg-fetch'
+import 'whatwg-fetch'
 
 import {
   PICTURE_GET_MODEL,
@@ -23,12 +23,12 @@ export function getModel (solidProfile) {
   }
 }
 
-export function uploadAndSave (storageURL, file) {
+export function uploadAndSave (storageUrl, file) {
   return (dispatch, getState) => {
     dispatch(uploadRequest())
     const data = new FormData()
     data.append('file', file)
-    return fetch(storageURL, {method: 'POST', body: data})
+    return fetch(storageUrl, {method: 'POST', body: data})
       .then(resp => {
         if (resp.status >= 200 && resp.status < 300) {
           return dispatch(uploadSuccess(resp.headers.get('location')))
@@ -119,10 +119,10 @@ export function select (file) {
   }
 }
 
-export function readSuccess (fileDataURL) {
+export function readSuccess (fileDataUrl) {
   return {
     type: PICTURE_READ_SUCCESS,
-    fileDataURL
+    fileDataUrl
   }
 }
 
@@ -130,5 +130,11 @@ export function readFailure (error) {
   return {
     type: PICTURE_READ_FAILURE,
     error
+  }
+}
+
+export function cancel () {
+  return {
+    type: PICTURE_CANCEL
   }
 }

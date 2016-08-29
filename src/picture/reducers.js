@@ -24,10 +24,23 @@ export function model (state = {}, action) {
   }
 }
 
-export function fileDataURL (state = '', action) {
+export function file (state = null, action) {
+  switch (action.type) {
+    case PICTURE_SELECT:
+      return action.file
+    case PICTURE_CANCEL:
+    case PICTURE_UPLOAD_SUCCESS:
+    case PICTURE_SAVE_MODEL_SUCCESS:
+      return null
+    default:
+      return state
+  }
+}
+
+export function fileDataUrl (state = '', action) {
   switch (action.type) {
     case PICTURE_READ_SUCCESS:
-      return action.fileDataURL
+      return action.fileDataUrl
     case PICTURE_CANCEL:
     case PICTURE_SAVE_MODEL_SUCCESS:
       return ''
@@ -41,6 +54,7 @@ export function isSaving (state = false, action) {
     case PICTURE_UPLOAD_REQUEST:
     case PICTURE_SAVE_MODEL_REQUEST:
       return true
+    case PICTURE_CANCEL:
     case PICTURE_UPLOAD_SUCCESS:
     case PICTURE_UPLOAD_FAILURE:
     case PICTURE_SAVE_MODEL_SUCCESS:
@@ -51,4 +65,4 @@ export function isSaving (state = false, action) {
   }
 }
 
-export default combineReducers({model, fileDataURL, isSaving})
+export default combineReducers({model, file, fileDataUrl, isSaving})

@@ -5,15 +5,29 @@ import { bindActionCreators } from 'redux'
 import * as Actions from '../actions'
 import PictureForm from '../components/PictureForm'
 
-const PictureEditor = ({ actions, picUrl }) => {
+const PictureEditor = ({ actions, file, isSaving, picUrl, storageUrl }) => {
+  const canUpload = file ? true : false
+  const handleButtonChoosePic = event => {
+    event.preventDefault()
+    document.getElementById('img-input').click()
+  }
+  const handleChoosePic = event => actions.pick(event.target.files[0])
+  const handleClickUpload = event => {
+    event.preventDefault()
+    actions.uploadAndSave(storageUrl, file)
+  }
+  const handleClickCancel = () => actions.cancel()
+
+  console.log('is saving?', isSaving)
+
   const props = {
     picUrl,
-    handleChoosePic: () => console.log('clicked choose pic'),
-    handleClickUpload: event => {
-      event.preventDefault
-      console.log('clicked upload')
-    },
-    handleClickCancel: () => console.log('clicked cancel')
+    canUpload,
+    isSaving,
+    handleButtonChoosePic,
+    handleChoosePic,
+    handleClickUpload,
+    handleClickCancel
   }
 
   return (
@@ -23,12 +37,17 @@ const PictureEditor = ({ actions, picUrl }) => {
 
 PictureEditor.propTypes = {
   actions: PropTypes.object.isRequired,
-  picUrl: PropTypes.string.isRequired
+  isSaving: PropTypes.bool.isRequired,
+  picUrl: PropTypes.string.isRequired,
+  storageUrl: PropTypes.string.isRequired
 }
 
 function mapStateToProps (state) {
   return {
-    picUrl: state.picture.fileDataURL || state.picture.model.get('img')[0].value
+    file: state.picture.file,
+    isSaving: state.picture.isSaving,
+    picUrl: state.picture.fileDataUrl || state.picture.model.get('img')[0].value,
+    storageUrl: state.solidProfile.storage[0]
   }
 }
 

@@ -17,7 +17,7 @@ const ProfileEdit = ({
       <div className="card-header">
         <div className="columns">
           <div className="column">
-            <h2 className="card-title float-left">Basic Information</h2>
+            <h1 className="card-title float-left">Basic Information</h1>
           </div>
         </div>
       </div>

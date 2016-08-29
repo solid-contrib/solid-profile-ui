@@ -11,9 +11,13 @@ const App = ({ auth }) => {
   }
 
   return (
-    <div>
-      <PictureEditor />
-      <BasicInfo />
+    <div className="columns">
+      <div className="column">
+        <PictureEditor />
+      </div>
+      <div className="column">
+        <BasicInfo />
+      </div>
     </div>
   )
 }

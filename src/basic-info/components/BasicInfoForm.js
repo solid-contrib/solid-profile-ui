@@ -38,8 +38,8 @@ const BasicInfoForm = ({
               </div>
               <div className="columns">
                 <div className="column">
-                  <div className="form-group">
-                    <button className="submit btn btn-primary {isSaving ? 'loading' : ''}" type="submit" onClick={onClickSubmit}>Submit</button>
+                  <div className="form-group btn-group">
+                    <button className={'submit btn btn-primary ' + (isSaving ? 'loading' : '')} type="submit" onClick={onClickSubmit}>Submit</button>
                     <button className="cancel btn" type="reset" onClick={onClickCancel}>Cancel</button>
                   </div>
                 </div>

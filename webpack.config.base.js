@@ -1,30 +1,21 @@
-var path = require('path')
+const path = require('path')
 
 module.exports = {
-  entry: './assets/scripts/index.js',
+  entry: './src/index.js',
   output: {
     path: path.join(__dirname, '/build/'),
+    publicPath: '/build/',
     filename: 'bundle.js'
   },
   resolve: {
-    modulesDirectories: ['node_modules'],
-    alias: {
-      spectre: 'spectre.css/dist/spectre.min.css'
-    }
+    modulesDirectories: ['node_modules']
   },
   module: {
     loaders: [
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        loader: 'babel',
-        query: {
-          presets: ['es2015']
-        }
-      },
-      {
-        test: /\.handlebars$/,
-        loader: 'handlebars'
+        loader: 'babel'
       },
       {
         test: /\.json$/,
@@ -39,5 +30,6 @@ module.exports = {
     xhr2: 'XMLHttpRequest',
     xmlhttprequest: 'XMLHttpRequest'
   },
-  devtool: 'source-map'
+  devtool: 'source-map',
+  plugins: []
 }

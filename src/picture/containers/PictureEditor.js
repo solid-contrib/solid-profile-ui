@@ -44,7 +44,7 @@ function mapStateToProps (state) {
   return {
     file: state.picture.file,
     isSaving: state.picture.isSaving,
-    picUrl: state.picture.fileDataUrl || state.picture.model.get('img')[0].value,
+    picUrl: getPicUrl(state),
     storageUrl: state.solidProfile.storage[0]
   }
 }

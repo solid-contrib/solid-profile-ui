@@ -15,14 +15,15 @@ import { createBasicInfoModel } from './models'
 export function getModel (solidProfile) {
   return {
     type: BASIC_INFO_GET_MODEL,
-    model: createBasicInfoModel(solidProfile)
+    model: createBasicInfoModel(solidProfile.parsedGraph, solidProfile.webId)
   }
 }
 
-export function edit (model) {
+export function edit (model, fieldCreators) {
   return {
     type: BASIC_INFO_EDIT,
-    model
+    model,
+    fieldCreators
   }
 }
 

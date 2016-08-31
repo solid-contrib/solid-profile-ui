@@ -27,13 +27,13 @@ const BasicInfoForm = ({
               <div className="columns">
                 <div className="column">
                   <label className="form-label" htmlFor="name-input">Name</label>
-                  <input className="form-input" id="name-input" type="text" value={name} onChange={onChangeName} />
+                  <input className="form-input" id="name-input" type="text" value={name} placeholder="Add your name" onChange={onChangeName} />
                 </div>
               </div>
               <div className="columns">
                 <div className="column">
                   <label className="form-label" htmlFor="email-input">Email</label>
-                  <input className="form-input" id="email-input" type="email" value={email} onChange={onChangeEmail} />
+                  <input className="form-input" id="email-input" type="email" value={email} placeholder="Add your email address" onChange={onChangeEmail} />
                 </div>
               </div>
               <div className="columns">

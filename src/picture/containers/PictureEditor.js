@@ -50,9 +50,8 @@ function mapStateToProps (state) {
 }
 
 function getPicUrl (state) {
-  const imgFields = state.picture.model.get('img')
-  return state.picture.fileDataUrl
-    || imgFields.length ? imgFields[0].value : '/assets/img/solid-logo.svg'
+  const picUrl = state.picture.model.any('img')
+  return state.picture.fileDataUrl || picUrl || 'assets/img/solid-logo.svg'
 }
 
 function mapDispatchToProps (dispatch) {

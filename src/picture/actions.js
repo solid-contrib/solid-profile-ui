@@ -19,7 +19,7 @@ import { createPictureModel } from './models'
 export function getModel (solidProfile) {
   return {
     type: PICTURE_GET_MODEL,
-    model: createPictureModel(solidProfile)
+    model: createPictureModel(solidProfile.parsedGraph, solidProfile.webId)
   }
 }
 

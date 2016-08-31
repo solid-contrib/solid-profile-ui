@@ -5,15 +5,21 @@ import { bindActionCreators } from 'redux'
 import * as Actions from '../actions'
 import BasicInfoEditor from './BasicInfoEditor'
 import BasicInfoView from '../components/BasicInfoView'
+import fields from '../fields'
+import sourceConfig from '../../sourceConfig'
 
-const BasicInfo = ({ actions, currentModel, editedModel }) => {
+const BasicInfo = ({ actions, currentModel, editedModel, solidProfile }) => {
   if (Object.keys(editedModel).length) {
     return <BasicInfoEditor />
   } else {
-    const name = currentModel.get('name')[0].value
-    const mailTo = currentModel.get('mbox')[0].value
+    const baseUrl = solidProfile.baseProfileUrl.replace('/profile/card', '')
+    const name = currentModel.any('name') || 'Add your name'
+    const mailTo = currentModel.any('mbox') || 'Add your email address'
     const email = mailTo.replace('mailto:', '')
-    const onClickEdit = () => actions.edit(currentModel)
+
+    const fieldCreators = fields(sourceConfig(baseUrl))
+
+    const onClickEdit = () => actions.edit(currentModel, fieldCreators)
     const props = {name, email, mailTo, onClickEdit}
     return <BasicInfoView {...props} />
   }
@@ -21,13 +27,15 @@ const BasicInfo = ({ actions, currentModel, editedModel }) => {
 
 BasicInfo.propTypes = {
   currentModel: PropTypes.object.isRequired,
-  editedModel: PropTypes.object.isRequired
+  editedModel: PropTypes.object.isRequired,
+  solidProfile: PropTypes.object.isRequired
 }
 
 function mapStateToProps (state) {
   return {
     currentModel: state.basicInfo.currentModel,
-    editedModel: state.basicInfo.editedModel
+    editedModel: state.basicInfo.editedModel,
+    solidProfile: state.solidProfile
   }
 }
 

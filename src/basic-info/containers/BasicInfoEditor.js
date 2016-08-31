@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux'
 
 import * as Actions from '../actions'
 import BasicInfoForm from '../components/BasicInfoForm'
+import fields from '../fields'
+import sourceConfig from '../../sourceConfig.js'
 
 class BasicInfoEditor extends React.Component {
   onChangeField (field, processNewValue = x => x) {
@@ -15,8 +17,11 @@ class BasicInfoEditor extends React.Component {
 
   render () {
     const {actions, editedModel, isSaving} = this.props
-    const nameField = editedModel.get('name')[0]
-    const emailField = editedModel.get('mbox')[0]
+
+    // We can assume that there's a name and email field because the editedModel
+    // reducer adds them.
+    const nameField = editedModel.fields('name')[0]
+    const emailField = editedModel.fields('mbox')[0]
     const name = nameField.value
     const email = emailField.value.replace('mailto:', '')
     const onChangeName = this.onChangeField(nameField)

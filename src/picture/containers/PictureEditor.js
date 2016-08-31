@@ -11,7 +11,10 @@ const PictureEditor = ({ actions, file, isSaving, picUrl, storageUrl }) => {
     event.preventDefault()
     document.getElementById('img-input').click()
   }
-  const handleChoosePic = event => actions.pick(event.target.files[0])
+  const handleChoosePic = event => {
+    const file = event.target.files[0]
+    return file ? actions.pick(file) : actions.cancel()
+  }
   const handleClickUpload = event => {
     event.preventDefault()
     actions.uploadAndSave(storageUrl, file)
@@ -50,9 +53,8 @@ function mapStateToProps (state) {
 }
 
 function getPicUrl (state) {
-  const imgFields = state.picture.model.get('img')
-  return state.picture.fileDataUrl
-    || imgFields.length ? imgFields[0].value : '/assets/img/solid-logo.svg'
+  const picUrl = state.picture.model.any('img')
+  return state.picture.fileDataUrl || picUrl || 'assets/img/solid-logo.svg'
 }
 
 function mapDispatchToProps (dispatch) {

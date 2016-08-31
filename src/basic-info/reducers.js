@@ -12,38 +12,47 @@ import {
 
 function currentModel (state = {}, action) {
   switch (action.type) {
-    case BASIC_INFO_GET_MODEL:
-    case BASIC_INFO_SAVE_SUCCESS:
-      return action.model
-    default:
-      return state
+  case BASIC_INFO_GET_MODEL:
+  case BASIC_INFO_SAVE_SUCCESS:
+    return action.model
+  default:
+    return state
   }
 }
 
 function editedModel (state = {}, action) {
   switch (action.type) {
-    case BASIC_INFO_EDIT:
-      return action.model
-    case BASIC_INFO_FIELD_CHANGE:
-      return state.set(action.field, {value: action.value})
-    case BASIC_INFO_CANCEL_EDITING:
-    case BASIC_INFO_SAVE_SUCCESS:
-    case BASIC_INFO_GET_MODEL:
-      return {}
-    default:
-      return state
+  case BASIC_INFO_EDIT:
+    // Check if the model has name and email fields, and if not, add them.
+    let edited = action.model
+    const {name, mbox} = action.fieldCreators
+    const requiredFields = [['name', name], ['mbox', mbox]]
+    for (const [fieldKey, field] of requiredFields) {
+      if (!edited.any(fieldKey)) {
+        edited = edited.add(fieldKey, field('', {listed: true}))
+      }
+    }
+    return edited
+  case BASIC_INFO_FIELD_CHANGE:
+    return state.set(action.field, {value: action.value})
+  case BASIC_INFO_CANCEL_EDITING:
+  case BASIC_INFO_SAVE_SUCCESS:
+  case BASIC_INFO_GET_MODEL:
+    return {}
+  default:
+    return state
   }
 }
 
 function isSaving (state = false, action) {
   switch (action.type) {
-    case BASIC_INFO_SAVE_REQUEST:
-      return true
-    case BASIC_INFO_SAVE_SUCCESS:
-    case BASIC_INFO_SAVE_FAILURE:
-      return false
-    default:
-      return state
+  case BASIC_INFO_SAVE_REQUEST:
+    return true
+  case BASIC_INFO_SAVE_SUCCESS:
+  case BASIC_INFO_SAVE_FAILURE:
+    return false
+  default:
+    return state
   }
 }
 

@@ -1,26 +1,15 @@
-import { fieldFactory, modelFactory } from 'modelld'
-import { rdflib, vocab } from 'solid-client'
+import { modelFactory } from 'modelld'
+import { rdflib } from 'solid-client'
 
-export function createBasicInfoModel (solidProfile) {
-  const webId = solidProfile.webId
-  const profileURI = webId.replace('#me', '')
-  const privateURI = profileURI.replace('profile/card', 'settings/prefs.ttl')
-  const sourceConfig = {
-    defaultSources: {
-      listed: profileURI,
-      unlisted: privateURI
-    },
-    sourceIndex: {
-      [profileURI]: true,
-      [privateURI]: false
-    }
-  }
-  const field = fieldFactory(sourceConfig)
-  const name = field(vocab.foaf('name'))
-  const mbox = field(vocab.foaf('mbox'))
+import fields from './fields'
+import sourceConfig from '../sourceConfig'
+
+export function createBasicInfoModel (graph, webId) {
+  const {name, mbox} = fields(sourceConfig(webId))
   const basicInfoModel = modelFactory(rdflib, {
     name,
     mbox
   })
-  return basicInfoModel(solidProfile.parsedGraph, webId)
+  return basicInfoModel(graph, webId)
 }
+

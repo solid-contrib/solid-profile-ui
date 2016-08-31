@@ -29,7 +29,7 @@ const PictureForm = ({
         <div className="columns">
           <div className="column text-center">
             <div className="btn-group">
-              <button className={'btn btn-primary ' + (isSaving ? 'loading' : '')} type="submit" disabled={!canUpload} onClick={handleClickUpload}>Upload</button>
+              <button className={'btn btn-primary ' + (isSaving ? 'loading' : '')} type="submit" disabled={!canUpload} onClick={handleClickUpload}>Apply</button>
               <button className="btn" type="reset" disabled={!canUpload} onClick={handleClickCancel}>Cancel</button>
             </div>
           </div>

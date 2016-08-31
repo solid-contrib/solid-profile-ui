@@ -11,7 +11,10 @@ const PictureEditor = ({ actions, file, isSaving, picUrl, storageUrl }) => {
     event.preventDefault()
     document.getElementById('img-input').click()
   }
-  const handleChoosePic = event => actions.pick(event.target.files[0])
+  const handleChoosePic = event => {
+    const file = event.target.files[0]
+    return file ? actions.pick(file) : actions.cancel()
+  }
   const handleClickUpload = event => {
     event.preventDefault()
     actions.uploadAndSave(storageUrl, file)

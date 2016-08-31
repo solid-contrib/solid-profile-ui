@@ -102,12 +102,8 @@ export function pick (file) {
   return dispatch => {
     dispatch(select(file))
     const fileReader = new FileReader()
-    fileReader.onload = event => {
-      dispatch(readSuccess(event.target.result))
-    }
-    fileReader.onerror = event => {
-      dispatch(readFailure(event.target.error))
-    }
+    fileReader.onload = event => dispatch(readSuccess(event.target.result))
+    fileReader.onerror = event => dispatch(readFailure(event.target.error))
     fileReader.readAsDataURL(file)
   }
 }

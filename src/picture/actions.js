@@ -41,7 +41,7 @@ export function uploadAndSave (storageUrl, file) {
       .catch(error => dispatch(uploadFailure(error)))
       .then(successAction => {
         const model = getState().picture.model
-        const imgField = model.get('img')[0]
+        const imgField = model.fields('img')[0]
         const newPicURL = successAction.uploadedURL
         return dispatch(save(model.set(imgField, {value: newPicURL})))
       })

@@ -6,7 +6,7 @@ module.exports = Object.assign({}, webpackConfig, {
   plugins: [
     ...webpackConfig.plugins,
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
+      'process.env.NODE_ENV': JSON.stringify('test')
     })
   ],
   devtool: 'inline-source-map'

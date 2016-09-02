@@ -5,7 +5,7 @@ import rootReducer from './rootReducer'
 
 const middlewares = [thunk]
 
-if (process.env.NODE_ENV === 'development') {
+if (new Set(['development', 'test']).has(process.env.NODE_ENV)) {
   const createLogger = require('redux-logger')
   middlewares.push(createLogger())
 }

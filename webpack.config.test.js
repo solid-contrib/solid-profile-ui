@@ -9,5 +9,10 @@ module.exports = Object.assign({}, webpackConfig, {
       'process.env.NODE_ENV': JSON.stringify('test')
     })
   ],
+  externals: {
+    'react/addons': true,
+    'react/lib/ExecutionEnvironment': true,
+    'react/lib/ReactContext': true
+  },
   devtool: 'inline-source-map'
 })

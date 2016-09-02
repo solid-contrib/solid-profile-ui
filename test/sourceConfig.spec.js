@@ -1,6 +1,6 @@
 import sourceConfig from '../src/sourceConfig'
 
-describe('sourceConfig.js', () => {
+describe('sourceConfig', () => {
   describe('sourceConfig', () => {
     const webId = 'https://example.com/profile/card#me'
 

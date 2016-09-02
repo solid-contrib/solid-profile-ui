@@ -34,12 +34,29 @@ module.exports = function(config) {
       'test/**/*.js': ['webpack', 'sourcemap']
     },
 
+
+    // plugin config
     webpack: webpackConfig,
+
+    coverageReporter: {
+      type: 'lcov',
+      dir: 'coverage/',
+      subdir: browser => {
+        // subdirectories are named after the browsers that ran the test suite.
+        // slugify the subdirectory names.
+        return browser.toLowerCase().split(/[ /-]/)[0]
+      },
+      check: {
+        global: {
+          statements: 90
+        }
+      }
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'kjhtml', 'coverage'],
 
 
     // web server port

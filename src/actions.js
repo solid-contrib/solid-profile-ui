@@ -9,11 +9,11 @@ export function getModels () {
   return dispatch => {
     return dispatch(authenticate())
       .then(action => solid.getProfile(action.webId))
+      .catch(error => console.log('TODO - dispatch an error action'))
       .then(solidProfile => {
-        dispatch(loadSolidProfile(solidProfile))
         dispatch(getBasicInfoModel(solidProfile))
         dispatch(getPictureModel(solidProfile))
-        return solidProfile
+        return dispatch(loadSolidProfile(solidProfile))
       })
   }
 }

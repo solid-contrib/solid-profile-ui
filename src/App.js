@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import BasicInfo from './basic-info/containers/BasicInfo'
 import PictureEditor from './picture/containers/PictureEditor'
 
-const App = ({ auth }) => {
+export const App = ({ auth }) => {
   if (auth.isLoading) {
     return <div className="loading" />
   }

@@ -1,7 +1,10 @@
 import { spy } from 'sinon'
 
 import actionsInjector from 'inject!../src/actions'
-import { SOLID_PROFILE_LOAD } from '../src/action-types'
+import {
+  SOLID_PROFILE_LOAD_SUCCESS,
+  SOLID_PROFILE_LOAD_FAILURE
+} from '../src/action-types'
 
 describe('actions', () => {
   // Stub out the dispatch function since we're not testing with a redux store.
@@ -41,18 +44,31 @@ describe('actions', () => {
         basicInfoGetModelSpy,
         pictureGetModelSpy
       } = injectActions(webId => solidProfile)
+
       actions.getModels()(stubbedDispatch)
         .then(loadSolidProfileAction => {
           expect(basicInfoGetModelSpy.calledWith(solidProfile)).toBe(true)
           expect(pictureGetModelSpy.calledWith(solidProfile)).toBe(true)
           expect(loadSolidProfileAction).toEqual({
-            type: SOLID_PROFILE_LOAD,
+            type: SOLID_PROFILE_LOAD_SUCCESS,
             solidProfile
           })
           done()
         })
     })
 
-    it('dispatches a profile load failure action when the profile can\'t be loaded')
+    it('dispatches a profile load failure action when the profile can\'t be loaded', (done) => {
+      const {
+        actions,
+        basicInfoGetModelSpy,
+        pictureGetModelSpy
+      } = injectActions(webId => { throw new Error() })
+
+      actions.getModels()(stubbedDispatch)
+        .then(failureAction => {
+          expect(failureAction.type).toEqual(SOLID_PROFILE_LOAD_FAILURE)
+          done()
+        })
+    })
   })
 })

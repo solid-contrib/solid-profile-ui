@@ -6,24 +6,24 @@ import {
   AUTH_FAILURE
 } from './action-types'
 
-function webId (state = '', action) {
+export function webId (state = '', action) {
   switch (action.type) {
-  case AUTH_SUCCESS:
-    return action.webId
-  default:
-    return state
+    case AUTH_SUCCESS:
+      return action.webId
+    default:
+      return state
   }
 }
 
-function isLoading (state = true, action) {
+export function isLoading (state = true, action) {
   switch (action.type) {
-  case AUTH_REQUEST:
-    return true
-  case AUTH_FAILURE:
-  case AUTH_SUCCESS:
-    return false
-  default:
-    return state
+    case AUTH_REQUEST:
+      return true
+    case AUTH_FAILURE:
+    case AUTH_SUCCESS:
+      return false
+    default:
+      return state
   }
 }
 

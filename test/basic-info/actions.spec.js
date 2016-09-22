@@ -1,20 +1,14 @@
 /* global describe, it, expect */
+import { spy, stub } from 'sinon'
 import { rdflib } from 'solid-client'
 
 import {
   BASIC_INFO_GET_MODEL,
   BASIC_INFO_EDIT,
   BASIC_INFO_FIELD_CHANGE,
-  BASIC_INFO_CANCEL_EDITING,
-  BASIC_INFO_SAVE_REQUEST,
-  BASIC_INFO_SAVE_SUCCESS,
-  BASIC_INFO_SAVE_FAILURE
+  BASIC_INFO_CANCEL_EDITING
 } from '../../src/basic-info/action-types'
-import {
-  getModel,
-  edit,
-  changeField
-} from '../../src/basic-info/actions'
+import * as Actions from '../../src/basic-info/actions'
 
 describe('basic info actions', () => {
   describe('getModel', () => {
@@ -48,7 +42,7 @@ describe('basic info actions', () => {
         parsedGraph: store
       }
 
-      const action = getModel(profile)
+      const action = Actions.getModel(profile)
       expect(action.type).toEqual(BASIC_INFO_GET_MODEL)
       expect(action.model.any('name')).toEqual('Neat Example')
     })
@@ -60,7 +54,7 @@ describe('basic info actions', () => {
       const fieldCreators = {
         field: () => {}
       }
-      const action = edit(model, fieldCreators)
+      const action = Actions.edit(model, fieldCreators)
       expect(action.type).toBe(BASIC_INFO_EDIT)
       expect(action.model).toBe(model)
       expect(action.fieldCreators).toBe(fieldCreators)
@@ -69,11 +63,47 @@ describe('basic info actions', () => {
 
   describe('changeField', () => {
     it('generates an action for a given field changing to a given value', () => {
-      expect(changeField('foo', 'bar')).toEqual({
+      expect(Actions.changeField('foo', 'bar')).toEqual({
         type: BASIC_INFO_FIELD_CHANGE,
         field: 'foo',
         value: 'bar'
       })
+    })
+  })
+
+  describe('cancelEditing', () => {
+    it('generates an action for cancelling editing', () => {
+      expect(Actions.cancelEditing()).toEqual({
+        type: BASIC_INFO_CANCEL_EDITING
+      })
+    })
+  })
+
+  describe('save', () => {
+    it('generates saveRequest and saveSuccess actions when saving works', done => {
+      const model = {save: stub()}
+      const newModel = {prop: 'value'}
+      const dispatchSpy = spy()
+      model.save.returns(Promise.resolve(newModel))
+      Actions.save(model)(dispatchSpy)
+        .then(() => {
+          expect(dispatchSpy.calledWith(Actions.saveRequest())).toBe(true)
+          expect(dispatchSpy.calledWith(Actions.saveSuccess(newModel))).toBe(true)
+          done()
+        })
+    })
+
+    it('generates saveRequest and saveFailure actions when saving fails', done => {
+      const model = {save: stub()}
+      const error = 'oops!'
+      const dispatchSpy = spy()
+      model.save.returns(Promise.reject(error))
+      Actions.save(model)(dispatchSpy)
+        .then(() => {
+          expect(dispatchSpy.calledWith(Actions.saveRequest())).toBe(true)
+          expect(dispatchSpy.calledWith(Actions.saveFailure(error))).toBe(true)
+          done()
+        })
     })
   })
 })

@@ -35,7 +35,7 @@ describe('auth actions', () => {
         })
     })
 
-    it('dispatches a request and failure action when logging in fails', () => {
+    it('dispatches a request and failure action when logging in fails', (done) => {
       const {loginSpy, InjectedActions} = substituteSolidLogin(() => Promise.reject(new Error('oops!')))
       const dispatch = action => Promise.resolve(action)
       const dispatchSpy = spy(dispatch)

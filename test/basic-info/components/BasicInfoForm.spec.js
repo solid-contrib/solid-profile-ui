@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import React from 'react'
 import { spy } from 'sinon'
 
-import BasicInfoForm from '../../src/basic-info/components/BasicInfoForm'
+import BasicInfoForm from '../../../src/basic-info/components/BasicInfoForm'
 
 describe('BasicInfoForm', () => {
   describe('<BasicInfoForm />', () => {
@@ -18,7 +18,7 @@ describe('BasicInfoForm', () => {
             onChangeName: noop,
             onChangeEmail: noop,
             onClickSubmit: noop,
-            onClickCancel: noop,
+            onClickCancel: noop
           }, props)}
         />
       )

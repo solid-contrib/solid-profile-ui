@@ -10,37 +10,37 @@ const BasicInfoForm = ({
   onClickCancel
 }) => {
   return (
-    <section className="card">
+    <section className='card'>
 
-      <div className="card-header">
-        <div className="columns">
-          <div className="column">
-            <h2 className="card-title float-left">Basic Information</h2>
+      <div className='card-header'>
+        <div className='columns'>
+          <div className='column'>
+            <h2 className='card-title float-left'>Basic Information</h2>
           </div>
         </div>
       </div>
 
-      <div className="card-body">
-        <div className="columns">
-          <div className="column">
+      <div className='card-body'>
+        <div className='columns'>
+          <div className='column'>
             <form>
-              <div className="columns">
-                <div className="column">
-                  <label className="form-label" htmlFor="name-input">Name</label>
-                  <input className="form-input" id="name-input" type="text" value={name} placeholder="Add your name" onChange={onChangeName} />
+              <div className='columns'>
+                <div className='column'>
+                  <label className='form-label' htmlFor='name-input'>Name</label>
+                  <input className='form-input' id='name-input' type='text' value={name} placeholder='Add your name' onChange={onChangeName} />
                 </div>
               </div>
-              <div className="columns">
-                <div className="column">
-                  <label className="form-label" htmlFor="email-input">Email</label>
-                  <input className="form-input" id="email-input" type="email" value={email} placeholder="Add your email address" onChange={onChangeEmail} />
+              <div className='columns'>
+                <div className='column'>
+                  <label className='form-label' htmlFor='email-input'>Email</label>
+                  <input className='form-input' id='email-input' type='email' value={email} placeholder='Add your email address' onChange={onChangeEmail} />
                 </div>
               </div>
-              <div className="columns">
-                <div className="column">
-                  <div className="form-group btn-group">
-                    <button className={'submit btn btn-primary ' + (isSaving ? 'loading' : '')} type="submit" onClick={onClickSubmit}>Submit</button>
-                    <button className="cancel btn" type="reset" onClick={onClickCancel}>Cancel</button>
+              <div className='columns'>
+                <div className='column'>
+                  <div className='form-group btn-group'>
+                    <button className={'submit btn btn-primary ' + (isSaving ? 'loading' : '')} type='submit' onClick={onClickSubmit}>Submit</button>
+                    <button className='cancel btn' type='reset' onClick={onClickCancel}>Cancel</button>
                   </div>
                 </div>
               </div>

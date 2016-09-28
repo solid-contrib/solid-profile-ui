@@ -26,7 +26,7 @@ const ProfileView = ({ name, email, mailTo, onClickEdit }) => (
             <div className="column">
               <span className="label">Email</span>
               &nbsp;
-              {email.includes('@') ? <span><a href={mailTo}>{email}</a></span> : <span>{email}</span>}
+              <span><a href={mailTo}>{email}</a></span>
             </div>
           </div>
         </div>

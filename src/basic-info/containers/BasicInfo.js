@@ -8,14 +8,14 @@ import BasicInfoView from '../components/BasicInfoView'
 import fields from '../fields'
 import sourceConfig from '../../sourceConfig'
 
-const BasicInfo = ({ actions, currentModel, editedModel, solidProfile }) => {
+export const BasicInfo = ({ actions, currentModel, editedModel, solidProfile }) => {
   if (Object.keys(editedModel).length) {
     return <BasicInfoEditor />
   } else {
     const baseUrl = solidProfile.baseProfileUrl.replace('/profile/card', '')
     const name = currentModel.any('name') || 'Add your name'
-    const mailTo = currentModel.any('mbox') || 'Add your email address'
-    const email = mailTo.replace('mailto:', '')
+    const mailTo = currentModel.any('mbox') || ''
+    const email = mailTo.replace('mailto:', '') || 'Add your email address'
 
     const fieldCreators = fields(sourceConfig(baseUrl))
 

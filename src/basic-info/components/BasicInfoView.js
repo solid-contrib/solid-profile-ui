@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-const ProfileView = ({ name, email, mailTo, onClickEdit }) => (
+const BasicInfoView = ({ name, email, mailTo, onClickEdit }) => (
   <section className="card">
     <div className="card-header">
       <div className="columns">
@@ -35,11 +35,11 @@ const ProfileView = ({ name, email, mailTo, onClickEdit }) => (
   </section>
 )
 
-ProfileView.propTypes = {
+BasicInfoView.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   mailTo: PropTypes.string.isRequired,
   onClickEdit: PropTypes.func.isRequired
 }
 
-export default ProfileView
+export default BasicInfoView

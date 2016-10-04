@@ -12,4 +12,3 @@ export function createBasicInfoModel (graph, webId) {
   })
   return basicInfoModel(graph, webId)
 }
-

@@ -7,7 +7,7 @@ import BasicInfoForm from '../components/BasicInfoForm'
 import fields from '../fields'
 import sourceConfig from '../../sourceConfig.js'
 
-class BasicInfoEditor extends React.Component {
+export class BasicInfoEditor extends React.Component {
   onChangeField (field, processNewValue = x => x) {
     const {actions} = this.props
     return event => {

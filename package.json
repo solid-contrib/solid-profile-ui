@@ -23,26 +23,26 @@
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
-    "cross-env": "^2.0.1",
+    "cross-env": "^3.1.4",
     "handlebars": "^4.0.5",
     "handlebars-loader": "^1.3.0",
     "json-loader": "^0.5.4",
     "redux-logger": "^2.6.1",
-    "standard": "^7.1.2",
+    "standard": "^8.6.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
     "minivents": "^2.0.2",
-    "modelld": "^0.5.2",
+    "modelld": "^0.10.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
-    "react-redux": "^4.4.5",
+    "react-redux": "^5.0.2",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
-    "solid-client": "^0.22.4",
+    "solid-client": "^0.23.6",
     "spectre.css": "^0.1.24",
-    "whatwg-fetch": "^1.0.0"
+    "whatwg-fetch": "^2.0.2"
   }
 }
